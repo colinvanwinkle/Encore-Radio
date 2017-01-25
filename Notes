@@ -1,0 +1,3 @@
+Colin:
+
+I installed forever, which allows the process to run even when terminal is closed, it also restarts nodejs apps when they are saved so you don't have to quit and save. Instead of running an app like "node app.js", do "forever app.js"
