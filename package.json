@@ -1,0 +1,22 @@
+{
+  "name": "encore-radio",
+  "version": "1.0.0",
+  "description": "Encore Radio",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colinvanwinkle/Encore-Radio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colinvanwinkle/Encore-Radio/issues"
+  },
+  "homepage": "https://github.com/colinvanwinkle/Encore-Radio#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

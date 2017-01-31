@@ -1,0 +1,12 @@
+Instructions for server:
+
+Look up how to create an ssh key and connect it to digitalocean
+
+ssh -X root@138.197.215.196
+
+OR
+
+you can acccess the server under access tab under our droplet on digital ocean with username: root and password: encoreradio
+
+to start nodejs app, "forever start <app>.js"
+to stop nodejs app, "forever stopall"

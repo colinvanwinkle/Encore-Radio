@@ -1,12 +1,18 @@
-var http = require('http');
+var express = require('express');
 var fs = require('fs');
+var bodyParser = require('body-parser');
+var urlEncodedParser = bodyParser.urlencoded({extended: false});
+var app = express();
 
-var server = http.createServer(function(req, res){
 
-res.writeHead(200, {'Content-Type': 'text/html'});
-var readStream = fs.createReadStream(__dirname + '/index.html', 'utf8');
-readStream.pipe(res);
+app.get('/', function(req, res){
+res.sendFile(__dirname + '/index.html');
 });
 
 
-server.listen(80, '138.197.215.196');
+app.post('/', urlEncodedParser, function(req, res){
+console.log(req.body);
+console.log('hi');
+});
+
+app.listen(80);
