@@ -9,6 +9,15 @@ var audio;	//this object holds the audio object
 var fs = require('fs');
 var ytdl = require('ytdl-core');
 
+var db = require('mysql');
+/*
+   var connection = mysql.createConnection({
+host     : 'localhost',
+user     : 'me',
+password : 'secret',
+database : 'my_db'
+});
+ */
 class NavBar extends React.Component {
 	render() {
 		return (
@@ -75,9 +84,9 @@ class QueuedSongMain extends React.Component {
 				<SongDisplay />
 				<SongBar />
 				<audio controls className="player" preload="false">
-				      <source
-					  src="http://www.nihilus.net/soundtracks/Static%20Memories.mp3"
-					  />
+				<source
+				src="http://www.nihilus.net/soundtracks/Static%20Memories.mp3"
+				/>
 				</audio>
 				</div>
 			   );
@@ -111,79 +120,77 @@ class AcceptButton extends React.Component {
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = {audioTest: "http://www.nihilus.net/soundtracks/Static%20Memories.mp3", value: '', text: '', results: new Array(), urls: new Array()};
+		this.state = {audioTest:
+			"http://www.nihilus.net/soundtracks/Static%20Memories.mp3", value: '',
+				text: '', titles: '', urls: '', songs: ''};
 	}
 	getAudio(url) {
 		var audio1 = ytdl(url, {filter: function(f) {
-		    return f.container == 'mp4' && !f.encoding; }, requestOptions:
-			{headers : {
+				return f.container == 'mp4' && !f.encoding; }, requestOptions:
+				{headers : {
 				'Access-Control-Allow-Origin' :
 				'*',	
 				'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
 				'Access-Control-Allow-Headers' : 'Content-Type'
 				}}});
-		return audio1
+		return audio;
 
 	}
 	handleClick() {
 		this.setState({text: ''});	
 		var that = this;
 
-
-		var urlList;
 		youTube.search(this.state.value, 10, function(error, result){
 				var i = 0;
-				var tempResults = new Array();
-				var tempUrls = new Array();
+				var vidTitles = new Array();
+				var tempThumbUrls = new Array();
+				var songURLs = new Array();
 				for (i = 0; i < 10; i++) {
-					tempResults[i] = result.items[i].snippet.title;
-					tempUrls[i] = result.items[i].snippet.thumbnails.default.url;
+					vidTitles[i] = result.items[i].snippet.title;
+					tempThumbUrls[i] = result.items[i].snippet.thumbnails.default.url;
+					songURLs[i] = "https://youtube.com/embed/" + result.items[i].id.videoId
 				}
-				that.setState({results: tempResults, urls: tempUrls});
+				that.setState({titles: vidTitles, urls: tempThumbUrls, songs: songURLs});
+
 				audio = that.getAudio("www.youtube.com/watch?v=" + result.items[0].id.videoId);
 
 				/* this holds the actual audio object */
 				//audio = audioGetter.audio;
 				//that.setState({audioTest: audio});
 
-				//that.setState({text: that.state.text +
-				//result.items[i].snippet.title + ": " +
-				//"https://www.youtube.com/embed/" +
-				//	result.items[i].id.videoId + " "});	
-				});
+				}); //end of youtube search
 	}
+
 	handleChange(event){
 		this.setState({value: event.target.value});
 	}
-	handleLiClick(){
-		alert("Added Song to Queue");
-	}
+
 	render() {
 		return (
 				<div>
-					<div className="row searchInput">
-					<input value = {this.state.value} type="text" onChange={this.handleChange.bind(this)} />
-					<button onClick={this.handleClick.bind(this)}>Search</button>
-					<audio controls className="player" preload="false">
-					      <source
-						  src={this.state.audioTest}
-						  />
-				    </audio>
-					</div>
-					<div className="row resultList">
-					<ul>
-						<SearchResult backgroundColor={'#6ac5fd'} title={this.state.results[0]} url={this.state.urls[0]} />
-						<SearchResult backgroundColor={'#EEEEEE'} title={this.state.results[1]} url={this.state.urls[1]} />
-						<SearchResult backgroundColor={'#6ac5fd'} title={this.state.results[2]} url={this.state.urls[2]} />
-						<SearchResult backgroundColor={'#EEEEEE'}i title={this.state.results[3]} url={this.state.urls[3]} />
-						<SearchResult backgroundColor={'#6ac5fd'} title={this.state.results[4]} url={this.state.urls[4]} />
-						<SearchResult backgroundColor={'#EEEEEE'} title={this.state.results[5]} url={this.state.urls[5]} />
-						<SearchResult backgroundColor={'#6ac5fd'} title={this.state.results[6]} url={this.state.urls[6]} />
-						<SearchResult backgroundColor={'#EEEEEE'} title={this.state.results[7]} url={this.state.urls[7]} />
-						<SearchResult backgroundColor={'#6ac5fd'} title={this.state.results[8]} url={this.state.urls[8]} />
-						<SearchResult backgroundColor={'#EEEEEE'} title={this.state.results[9]} url={this.state.urls[9]} />
-					</ul>
-					</div>
+				<div className="row searchInput">
+				<input value = {this.state.value} type="text" onChange={this.handleChange.bind(this)} />
+				<button onClick={this.handleClick.bind(this)}>Search</button>
+				<audio controls className="player" preload="false">
+				<source
+				src={this.state.audioTest}
+				/>
+				</audio>
+				</div>
+				<div className="row resultList">
+				<ul>
+				<SearchResult songURL={this.state.songs[0]} backgroundColor={'#6ac5fd'} title={this.state.titles[0]} url={this.state.urls[0]} />
+				<SearchResult songURL={this.state.songs[1]} backgroundColor={'#EEEEEE'} title={this.state.titles[1]} url={this.state.urls[1]} />
+				<SearchResult songURL={this.state.songs[2]} backgroundColor={'#6ac5fd'} title={this.state.titles[2]} url={this.state.urls[2]} />
+				<SearchResult songURL={this.state.songs[3]} backgroundColor={'#EEEEEE'} title={this.state.titles[3]} url={this.state.urls[3]} />
+				<SearchResult songURL={this.state.songs[4]} backgroundColor={'#6ac5fd'} title={this.state.titles[4]} url={this.state.urls[4]} />
+				<SearchResult songURL={this.state.songs[5]} backgroundColor={'#EEEEEE'} title={this.state.titles[5]} url={this.state.urls[5]} />
+				<SearchResult songURL={this.state.songs[6]} backgroundColor={'#6ac5fd'} title={this.state.titles[6]} url={this.state.urls[6]} />
+				<SearchResult songURL={this.state.songs[7]} backgroundColor={'#EEEEEE'} title={this.state.titles[7]} url={this.state.urls[7]} />
+				<SearchResult songURL={this.state.songs[8]} backgroundColor={'#6ac5fd'} title={this.state.titles[8]} url={this.state.urls[8]} />
+				<SearchResult songURL={this.state.songs[9]} backgroundColor={'#EEEEEE'} title={this.state.titles[9]} url={this.state.urls[9]} />
+				</ul>
+				</div>
 				</div>
 				);
 	}
@@ -196,33 +203,40 @@ class TabTest extends React.Component {
 	}
 	render() {
 		return (
-			<div className="row">
+				<div className="row">
 				<ul className="nav nav-pills nav-justified">
-					<li className="active"><a data-toggle="pill" href="SearchTab">Search</a></li> 
-					<li><a data-toggle="pill" href="RecoTab">Reco</a></li>
+				<li className="active"><a data-toggle="pill" href="SearchTab">Search</a></li> 
+				<li><a data-toggle="pill" href="RecoTab">Reco</a></li>
 				</ul>
 				<div className="tab-content">
-					<div id="SearchTab" className="tab-pane fade">
-						<SearchBar />	
-					</div>
-					<div id="RecoTab" className="tab-pane fade">
-						<h1>Reco</h1>
-					</div>
+				<div id="SearchTab" className="tab-pane fade">
+				<SearchBar />	
 				</div>
-			</div>
-		);
+				<div id="RecoTab" className="tab-pane fade">
+				<h1>Reco</h1>
+				</div>
+				</div>
+				</div>
+			   );
 	}
 }
 
 
 class SearchResult extends React.Component {
+
+	handleAdd(event){
+
+		alert(this.props.title + "\n" + this.props.songURL + "\n" +
+		this.props.url);
+	}
+
 	render() {
 		return (
-			<div style={{backgroundColor: this.props.backgroundColor}} className="row SearchResult">
+				<div onClick={this.handleAdd.bind(this)}  style={{backgroundColor: this.props.backgroundColor}} className="row SearchResult">
 				<img className="ResultPic col-sm-2" src={this.props.url}/>
 				<p className="col-sm-9">{this.props.title}</p>
-			</div>
-		);
+				</div>
+			   );
 	}
 }
 
@@ -242,8 +256,8 @@ class SongBar extends React.Component {
 	render() {
 		return ( 
 				<div className="SongBar">  
-					<button className="Like"><span className="glyphicon glyphicon-thumbs-up"></span></button>
-					<button className="Dislike"><span className="glyphicon glyphicon-thumbs-down"></span></button>
+				<button className="Like"><span className="glyphicon glyphicon-thumbs-up"></span></button>
+				<button className="Dislike"><span className="glyphicon glyphicon-thumbs-down"></span></button>
 				</div>
 			   );
 	}
