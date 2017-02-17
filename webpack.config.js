@@ -10,7 +10,7 @@ module.exports = {
 	
 		loaders: [
 			{
-				test: /\.jsx$/,
+				test: /\.jsx?$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 				query:{
@@ -21,6 +21,10 @@ module.exports = {
 
 		]
 
+	},
+	node: {
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty'
 	}
-
 };

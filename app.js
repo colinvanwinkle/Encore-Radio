@@ -1,5 +1,5 @@
 require('babel-register')({
-	presets: ['react']
+presets: ['react']
 });
 
 var express = require('express');
@@ -8,6 +8,7 @@ var app = express();
 
 //calling render will look in the 'views' folder
 //app.set('views', __dirname + '/views');
+
 app.use(express.static('public'));
 app.use(require('./routes/index.jsx'));
 

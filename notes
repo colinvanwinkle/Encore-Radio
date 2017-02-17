@@ -8,5 +8,17 @@ OR
 
 you can acccess the server under access tab under our droplet on digital ocean with username: root and password: encoreradio
 
-to start nodejs app, "forever start <app>.js"
-to stop nodejs app, "forever stopall"
+Webpack Command:
+webpack -w
+
+Nodemon Command:
+nodemon app
+
+
+TO DOWNLOAD AND CONVERT TO AUDIO FILE:
+
+var audio = require('./getAudio.js');
+audio.getAudio(url);
+
+//This stores the song as "<videoID>.mp4" where <videoID> = url.substring(24);
+//Song mp4's are stored in /Encore-Radio/songs
