@@ -1,22 +1,17 @@
 var React = require('react');
 var ReactRouter = require('react-router');
+var Route = ReactRouter.Route;
+var IndexRoute = ReactRouter.IndexRoute;
+var Router = ReactRouter.Router;
 
-
-
-function createElement(Component, props){
-	return <Component {...props} {...window.PROPS} />;
-	}
 
 module.exports = (
-		<ReactRouter.Router history={ReactRouter.hashHistory} createElement={createElement}>
+	<Router history={ReactRouter.hashHistory}>
 
-		<ReactRouter.Route path='/' component={require('../views/index.jsx')}/>
-		<ReactRouter.Route path='/search'
-		component={require('../views/searchSong.jsx')}/>
-		<ReactRouter.Route path="/help"
-		component={require('../views/help.jsx')}/>
+			<Route path= '/' component ={require('../views/layout.jsx')}>
+				<IndexRoute component={require('../views/index.jsx')}/>
+			</Route>
 
-
-		</ReactRouter.Router>
+	</Router>
 
 		);
