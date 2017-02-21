@@ -1,3 +1,10 @@
+/**
+  *This module is the core of the app
+  *and is what to execute when running
+  * nodemon or forever. 
+  * 
+  *Initializes the app
+  */
 require('babel-register')({
 presets: ['react']
 });

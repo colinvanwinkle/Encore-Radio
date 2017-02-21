@@ -36950,15 +36950,20 @@ module.exports = Html5Entities;
 "use strict";
 
 
+//This module creates the routes given a url the user enters.
+// For example: when the user enters encoreradio.me/, the correspoinding
+// layout.jsx component is rendered because it uses the '/' path.
 var React = __webpack_require__(10);
 var ReactRouter = __webpack_require__(596);
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var Router = ReactRouter.Router;
 
+//Exports the routes
 module.exports = React.createElement(
 	Router,
 	{ history: ReactRouter.hashHistory },
+	'//\'/\' represents the homepage (layout.jsx)',
 	React.createElement(
 		Route,
 		{ path: '/', component: __webpack_require__(308) },
@@ -114874,6 +114879,9 @@ module.exports = {
 "use strict";
 
 
+//This module uses redux and routes to synchronize what is rendered on the
+//server and on the client
+
 var ReactDOM = __webpack_require__(163);
 var routes = __webpack_require__(293);
 var Redux = __webpack_require__(165);
@@ -114886,6 +114894,7 @@ function reducer(state) {
 
 var store = Redux.createStore(reducer, window.PROPS);
 
+//renders to the client
 ReactDOM.render(React.createElement(
 	Provider,
 	{ store: store },
