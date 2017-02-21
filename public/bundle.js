@@ -38898,6 +38898,12 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * This module is responsible for rendering and declaring the components
+ * that are used on the homepage as well as functionality that occurs on
+ * the current home page like searching for songs and addings songs to DB
+ */
+
 var React = __webpack_require__(10);
 var ReactDOM = __webpack_require__(163);
 var connect = __webpack_require__(164).connect;
@@ -38910,14 +38916,6 @@ var fs = __webpack_require__(20);
 var ytdl = __webpack_require__(682);
 
 var db = __webpack_require__(207);
-/*
-   var connection = mysql.createConnection({
-host     : 'localhost',
-user     : 'me',
-password : 'secret',
-database : 'my_db'
-});
- */
 
 var NavBar = function (_React$Component) {
 	(0, _inherits3.default)(NavBar, _React$Component);
@@ -39085,6 +39083,9 @@ var AcceptButton = function (_React$Component7) {
 	return AcceptButton;
 }(React.Component);
 
+//Component that conains all the search results when search button is clicked
+
+
 var SearchBar = function (_React$Component8) {
 	(0, _inherits3.default)(SearchBar, _React$Component8);
 
@@ -39110,29 +39111,34 @@ var SearchBar = function (_React$Component8) {
 					} } });
 			return audio;
 		}
+
+		//Fires when the search button is clicked
+
 	}, {
 		key: 'handleClick',
 		value: function handleClick() {
 			this.setState({ text: '' });
 			var that = this;
 
+			//Searches for the videos
 			youTube.search(this.state.value, 10, function (error, result) {
 				var i = 0;
 				var vidTitles = new Array();
 				var tempThumbUrls = new Array();
 				var songURLs = new Array();
+
+				//gets the title, the thumbnail url, and the video URL
 				for (i = 0; i < 10; i++) {
 					vidTitles[i] = result.items[i].snippet.title;
 					tempThumbUrls[i] = result.items[i].snippet.thumbnails.default.url;
 					songURLs[i] = "https://youtube.com/embed/" + result.items[i].id.videoId;
 				}
+
+				//set the state of the variables so that they are applied to the
+				//elements below
 				that.setState({ titles: vidTitles, urls: tempThumbUrls, songs: songURLs });
 
 				audio = that.getAudio("www.youtube.com/watch?v=" + result.items[0].id.videoId);
-
-				/* this holds the actual audio object */
-				//audio = audioGetter.audio;
-				//that.setState({audioTest: audio});
 			}); //end of youtube search
 		}
 	}, {
@@ -39140,6 +39146,10 @@ var SearchBar = function (_React$Component8) {
 		value: function handleChange(event) {
 			this.setState({ value: event.target.value });
 		}
+
+		//Renders all the searhc results and sets the values of their fields to the
+		//state of the component
+
 	}, {
 		key: 'render',
 		value: function render() {
@@ -39247,6 +39257,10 @@ var TabTest = function (_React$Component9) {
 	return TabTest;
 }(React.Component);
 
+//Contains an individual search result (one row) that is inserted into the
+//SearchBar component 10 times.
+
+
 var SearchResult = function (_React$Component10) {
 	(0, _inherits3.default)(SearchResult, _React$Component10);
 
@@ -39257,10 +39271,38 @@ var SearchResult = function (_React$Component10) {
 
 	(0, _createClass3.default)(SearchResult, [{
 		key: 'handleAdd',
+
+
+		//This function is fired when a <div> containing the song
+		//is clicked and should add the song to the DB
 		value: function handleAdd(event) {
 
+			/*
+   	var connection = db.createConnection({
+   	host     : 'localhost',
+   	user     : 'root',
+   	password : 'AMosshart7!',
+   	database : 'ERDB'
+   	});
+   */
 			alert(this.props.title + "\n" + this.props.songURL + "\n" + this.props.url);
+
+			/*
+   connection.connect();
+   
+   connection.query('INSERT INTO Songs' +
+   		'(Station_URL,Song_URL,Running_Time,Song_Title) VALUES (NULL,' +
+   			this.props.songURL +  ',NULL,' + this.props.title + ',',  function (error, results,
+   				fields) {
+   			if (error) throw error;
+   			});
+   
+   		connection.end();
+   		*/
 		}
+
+		//Renders an individual row component
+
 	}, {
 		key: 'render',
 		value: function render() {
@@ -39354,6 +39396,10 @@ var Station = function (_React$Component13) {
 	return Station;
 }(React.Component);
 
+//Inserts the Station component that is inserted into the final component that
+//is exported
+
+
 var layout = React.createClass({
 	displayName: 'layout',
 
@@ -39394,6 +39440,7 @@ var layout = React.createClass({
 	}
 });
 
+//Used for redux
 var wrapper = connect(function (state) {
 	return { custom: state };
 });

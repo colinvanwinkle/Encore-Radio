@@ -1,3 +1,9 @@
+/**
+ * This module is responsible for rendering and declaring the components
+ * that are used on the homepage as well as functionality that occurs on
+ * the current home page like searching for songs and addings songs to DB
+ */
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var connect  = require('react-redux').connect;
@@ -10,14 +16,8 @@ var fs = require('fs');
 var ytdl = require('ytdl-core');
 
 var db = require('mysql');
-/*
-   var connection = mysql.createConnection({
-host     : 'localhost',
-user     : 'me',
-password : 'secret',
-database : 'my_db'
-});
- */
+
+
 class NavBar extends React.Component {
 	render() {
 		return (
@@ -117,9 +117,11 @@ class AcceptButton extends React.Component {
 	}
 }
 
+//Component that conains all the search results when search button is clicked
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
+
 		this.state = {audioTest:
 			"http://www.nihilus.net/soundtracks/Static%20Memories.mp3", value: '',
 				text: '', titles: '', urls: '', songs: ''};
@@ -136,27 +138,32 @@ class SearchBar extends React.Component {
 		return audio;
 
 	}
+
+	//Fires when the search button is clicked
 	handleClick() {
 		this.setState({text: ''});	
 		var that = this;
 
+		//Searches for the videos
 		youTube.search(this.state.value, 10, function(error, result){
 				var i = 0;
 				var vidTitles = new Array();
 				var tempThumbUrls = new Array();
 				var songURLs = new Array();
+
+				//gets the title, the thumbnail url, and the video URL
 				for (i = 0; i < 10; i++) {
-					vidTitles[i] = result.items[i].snippet.title;
-					tempThumbUrls[i] = result.items[i].snippet.thumbnails.default.url;
-					songURLs[i] = "https://youtube.com/embed/" + result.items[i].id.videoId
+				vidTitles[i] = result.items[i].snippet.title;
+				tempThumbUrls[i] = result.items[i].snippet.thumbnails.default.url;
+				songURLs[i] = "https://youtube.com/embed/" + result.items[i].id.videoId
 				}
+
+				//set the state of the variables so that they are applied to the
+				//elements below
 				that.setState({titles: vidTitles, urls: tempThumbUrls, songs: songURLs});
 
 				audio = that.getAudio("www.youtube.com/watch?v=" + result.items[0].id.videoId);
 
-				/* this holds the actual audio object */
-				//audio = audioGetter.audio;
-				//that.setState({audioTest: audio});
 
 				}); //end of youtube search
 	}
@@ -165,6 +172,9 @@ class SearchBar extends React.Component {
 		this.setState({value: event.target.value});
 	}
 
+
+	//Renders all the searhc results and sets the values of their fields to the
+	//state of the component
 	render() {
 		return (
 				<div>
@@ -221,36 +231,62 @@ class TabTest extends React.Component {
 	}
 }
 
-
+//Contains an individual search result (one row) that is inserted into the
+//SearchBar component 10 times.
 class SearchResult extends React.Component {
 
+
+	//This function is fired when a <div> containing the song
+	//is clicked and should add the song to the DB
 	handleAdd(event){
 
-		alert(this.props.title + "\n" + this.props.songURL + "\n" +
+/*
+	var connection = db.createConnection({
+	host     : 'localhost',
+	user     : 'root',
+	password : 'AMosshart7!',
+	database : 'ERDB'
+	});
+*/
+alert(this.props.title + "\n" + this.props.songURL + "\n" +
 		this.props.url);
-	}
 
-	render() {
+/*
+connection.connect();
+
+connection.query('INSERT INTO Songs' +
+		'(Station_URL,Song_URL,Running_Time,Song_Title) VALUES (NULL,' +
+			this.props.songURL +  ',NULL,' + this.props.title + ',',  function (error, results,
+				fields) {
+			if (error) throw error;
+			});
+
+		connection.end();
+		*/
+		}
+
+		//Renders an individual row component
+		render() {
 		return (
 				<div onClick={this.handleAdd.bind(this)}  style={{backgroundColor: this.props.backgroundColor}} className="row SearchResult">
 				<img className="ResultPic col-sm-2" src={this.props.url}/>
 				<p className="col-sm-9">{this.props.title}</p>
 				</div>
 			   );
-	}
-}
+		}
+		}
 
-class SongDisplay extends React.Component {
-	render() {
-		return ( 
-				<div className="SongDisplay">
-				<img className="SongPic"
-				src="http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg"
-				/>
-				</div>
-			   );
-	}
-}
+		class SongDisplay extends React.Component {
+			render() {
+				return ( 
+						<div className="SongDisplay">
+						<img className="SongPic"
+						src="http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg"
+						/>
+						</div>
+					   );
+			}
+		}
 
 class SongBar extends React.Component {
 	render() {
@@ -275,6 +311,8 @@ class Station extends React.Component {
 }
 
 
+//Inserts the Station component that is inserted into the final component that
+//is exported
 var layout = React.createClass({
 render: function() {
 return (
@@ -312,7 +350,7 @@ return (
 }); 
 
 
-
+//Used for redux
 var wrapper = connect(
 
 		function(state){
