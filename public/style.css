@@ -1,49 +1,98 @@
 #nav {
-  background-color:#6ac5fd;
+  background-color:#000D41;
+  color:#FF6867;
 }
+
 #logo {
-  color:white;
+  color:#FF6867;
   text-align:center;
-  font-family:bariol;
-  
+  font-family:'Carrois Gothic SC';
 }
 
 .fill {
-  height:500px;
 }
 
-#body {
-  min-height:100%;
-  height:100%;
+#main {
+	background-color: #2f527b;
+	border:0;
+	max-width:98%;
+	padding-right:0px;
+	margin-right:0px;
+}
+
+.Login {
+	background:transparent;
+	border:0;
+	font-size:1.5em;
+	margin-top:1em;
+  	font-family:'Carrois Gothic SC';
+}
+
+.Help {
+	background:transparent;
+	border:0;
+	font-size:1.5em;
+	margin-top:1em;
+  	font-family:'Carrois Gothic SC';
 }
 
 #Queue {
+  border-radius:25px;
   height:60vh;
   margin-top:50px;
-  background-color:#6ac5fd;
+  background-color:#000D41;
+  box-shadow: 0 2px 5px 0 rgba(244, 104, 66,0.16),0 2px 10px 0 rgba(244, 104, 66,0.12);
 }
 
 .searchInput {
+	margin-top:0.5em;
 	margin-left:3vw;
 	margin-right:3vw;
+	margin-bottom:1em;
 }
 
 #Search {
+  box-shadow: 0 2px 5px 0 rgba(244, 104, 66,0.16),0 2px 10px 0 rgba(244, 104, 66,0.12);
+  border-radius:25px;
   height:60vh;
   margin-top:50px;
-  background-color:#6ac5fd;
-  overflow-y:scroll;
+  background-color:#000D41;
+  overflow-y:hidden;
+  overflow-x:hidden;
+}
+
+#SearchResults {
+	width:100%;
+	height:100%;
+	overflow-y:hidden;
+	overflow-x:hidden;
+}
+
+
+.resultList {
+	width:100%;
+	height:100%;
+	overflow-y:auto;
+	overflow-x:hidden;
 }
 
 .ResultPic {
-	height:5vh;
-	width:5vw;
+	height:2.5em;
+	width:2.5em;
 	max-height:100%;
 	max-width:100%;
 }
 
-.SearchResult {
-	margin-right:2vw;
+.ResultTitle {
+	font-family:'Carrois Gothic SC';
+	color:white;
+	margin-left:2.7em;
+	overflow-y:hidden;
+}
+
+.SearchResult { 
+	width:20em;
+	height:2.5em;
 }
 
 .QueuedSong {
@@ -90,7 +139,7 @@
   height:20%;
   width:fill;
   font-size:0.75vw;
-  background-color:#222222;
+  background-color:#011F53;
 }
 
 .QueueRow {
@@ -99,7 +148,7 @@
   margin-top:17%;
   margin: 7em 0 0 2em;
   margin-left:3em;
-  background-color:#6ac5fd;
+  background-color:#000D41;
   padding: 0;
   position: relative;
 }
@@ -118,3 +167,16 @@
   height:100%;
 }
 
+#KB {
+	width:40em;
+	height:40em;
+}
+
+.SearchButton {
+	margin-left:1em;
+	color:#FF6867;
+}
+
+#SearchInput {
+	border-radius:4px;
+}

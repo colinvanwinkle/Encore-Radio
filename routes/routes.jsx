@@ -12,7 +12,6 @@ var Router = ReactRouter.Router;
 module.exports = (
 	<Router history={ReactRouter.hashHistory}>
 
-			//'/' represents the homepage (layout.jsx)
 			<Route path= '/' component ={require('../views/layout.jsx')}>
 				<IndexRoute component={require('../views/index.jsx')}/>
 			</Route>
