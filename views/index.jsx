@@ -11,5 +11,4 @@ class SearchForm extends React.Component{
 
 
 
-module.exports = SearchForm; 
-
+module.exports = SearchForm;

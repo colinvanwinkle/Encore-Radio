@@ -20,6 +20,10 @@
 	margin-right:0px;
 }
 
+.HelpModal {
+  	background-color:#000D41;
+}
+
 .Login {
 	background:transparent;
 	border:0;

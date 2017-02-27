@@ -80,8 +80,12 @@ class SearchBar extends React.Component {
 	//Fires when the search button is clicked
 	handleClick() {
 		this.setState({text: ''});	
-		var that = this;
+	}
 
+	handleChange(event){
+		this.setState({value: event.target.value});
+
+		var that = this;
 		//Searches for the videos
 		youTube.search(this.state.value, 10, function(error, result){
 				var i = 0;
@@ -101,10 +105,6 @@ class SearchBar extends React.Component {
 				that.setState({titles: vidTitles, urls: tempThumbUrls, songs: songURLs});
 
 				}); //end of youtube search
-	}
-
-	handleChange(event){
-		this.setState({value: event.target.value});
 	}
 
 
@@ -164,10 +164,10 @@ class SearchResult extends React.Component {
 	//is clicked and should add the song to the DB
 	handleAdd(event){
 
-
+/*
 alert(this.props.title + "\n" + this.props.songURL + "\n" +
 		this.props.url);
-
+*/
 var data =  {
 	songTitle: this.props.title,
 	songURL: this.props.songURL,
