@@ -27,10 +27,11 @@ var axios = require('axios');
  */
 class Body extends React.Component {
 	render() {
-		return ( 
+		return (
 				<div className="row" id="body">
 				<Queue />
 				<SearchAndReco />
+				<AudioPlayer/>
 				</div>
 			   );
 	}
@@ -42,15 +43,16 @@ class Body extends React.Component {
  */
 export default class SearchAndReco extends React.Component {
 	render() {
-		return ( 
+		return (
 				<div className="col-md-3 col-md-offset-1
-				row "id="Search"> 
+				row "id="Search">
 				<SearchBar />
-
+				<Test />
 				</div>
 			   );
 	}
 }
+
 
 //Component that conains all the search results when search button is clicked
 class SearchBar extends React.Component {
@@ -60,26 +62,34 @@ class SearchBar extends React.Component {
 		for (var i = 0; i < 10; i++) {
 			test[i] = "http://www.cityrider.com/fixed/43aspect.png";
 		}
-		this.state = {audioTest:
-			"http://www.nihilus.net/soundtracks/Static%20Memories.mp3", value: '',
-				text: '', titles: '', urls: test, songs: ''};
+		this.state = {
+			value: '',
+			text: '',
+			titles: '',
+			urls: test,
+			songs: ''
+		};
 	}
-	getAudio(url) {
-		var audio1 = ytdl(url, {filter: function(f) {
-				return f.container == 'mp4' && !f.encoding; }, requestOptions:
-				{headers : {
-				'Access-Control-Allow-Origin' :
-				'*',	
-				'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-				'Access-Control-Allow-Headers' : 'Content-Type'
-				}}});
-		return audio;
+
+	//the temporary button click will trigger this function and it will play the
+	//next song in queue
+	handlePlayNextSong(){
+		axios.get('/playNextSong').then(function (response) {
+				console.log("This is the reponse: " + JSON.stringify(response));
+				})
+		.catch(function (error) {
+				console.log(error);
+				});
+
+		alert("Hello!");
 
 	}
 
 	//Fires when the search button is clicked
 	handleClick() {
-		this.setState({text: ''});	
+		//moved the youtube search code into the handleChange event, so this
+		//function doesn't do anything
+		this.setState({text: ''});
 	}
 
 	handleChange(event){
@@ -87,7 +97,7 @@ class SearchBar extends React.Component {
 
 		var that = this;
 		//Searches for the videos
-		youTube.search(this.state.value, 10, function(error, result){
+		youTube.search(event.target.value, 10, function(error, result){
 				var i = 0;
 				var vidTitles = new Array();
 				var tempThumbUrls = new Array();
@@ -120,7 +130,9 @@ class SearchBar extends React.Component {
 						onChange={this.handleChange.bind(this)} />
 			    		<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
 							<span className="glyphicon glyphicon-search"></span>
-						</Button>  
+						</Button>
+						<Button onClick={this.handlePlayNextSong.bind(this)}>Play Next Song</Button>
+
 					</div>
 				</div>
 				<div id="scrollTest">
@@ -154,6 +166,21 @@ class SearchBar extends React.Component {
 	}
 }
 
+class AudioPlayer extends React.Component{
+
+	componentDidMount(){
+			alert("Audioplayer mounted!");
+
+
+	}
+	render(){
+
+		return (
+			<ReactPlayer url="" Playing/>
+		)
+	}
+
+}
 
 //Contains an individual search result (one row) that is inserted into the
 //SearchBar component 10 times.
@@ -164,16 +191,16 @@ class SearchResult extends React.Component {
 	//is clicked and should add the song to the DB
 	handleAdd(event){
 
-/*
+
 alert(this.props.title + "\n" + this.props.songURL + "\n" +
 		this.props.url);
-*/
-var data =  {
+
+var data = {
 	songTitle: this.props.title,
 	songURL: this.props.songURL,
 	thumbnailURL: this.props.url
+};
 
-}
 axios.post('/addSong', data).then(function (response) {
 		console.log(response);
 		})
@@ -245,7 +272,7 @@ return (
 	</html>
 	);
 		}
-}); 
+});
 
 
 //Used for redux

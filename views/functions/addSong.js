@@ -16,14 +16,7 @@ password : "Legends!",
 database : "ERDB"
 });
 
-connection.connect();
-
-//alert(this.props.title + "\n" + this.props.songURL + "\n" +
-//      this.props.url);
-
-
-
-
+//connection.connect();
 
 /* Helper function
  * Get the current date and time
@@ -61,16 +54,14 @@ var mysqlDateString = getDateTime();
 var hashID = hash({ID: "testURL" + JSON.stringify(songURL) + Math.random()});
 
 /* The command to query the database */
-var query = 'INSERT INTO Songs VALUES ("testURL",' + JSON.stringify(songURL) +
-', "00:00:00" ,' + JSON.stringify(title) + ',' + JSON.stringify(thumbnailURL) +', "' + hashID + '" , "' +  mysqlDateString + '");'
+var query = 'INSERT INTO Songs VALUES ("testURL",' + JSON.stringify(songURL) + ', "00:00:00" ,' + JSON.stringify(title) + ',' + JSON.stringify(thumbnailURL) +', "' + hashID + '" , "' +  mysqlDateString + '");'
 
 
-connection.query(query,  function (error, results,
-			fields) {
+connection.query(query,  function (error, results, fields) {
 		if (error) throw error;
 		});
 
 
-connection.end();
+//connection.end();
 }
 };

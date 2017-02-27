@@ -3,7 +3,8 @@ var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 import Help from './Help.jsx';
 import Login from './Login.jsx';
-
+//move this back under <div classnae...> when Help is fixed
+//<Help />
 /**
  * NavBar component located at the top of the screen and currently consists of
  * logo.
