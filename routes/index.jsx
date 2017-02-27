@@ -1,9 +1,8 @@
-//This module is responsible for handling the requests made to the server. 
+//This module is responsible for handling the requests made to the server.
 
 
 //Imports packages we will need to use
 var router = require('express').Router();
-
 var bodyParser = require('body-parser');
 var urlEncodedParser = bodyParser.urlencoded({extended: false});
 router.use(bodyParser());
@@ -13,22 +12,21 @@ var ReactDOMServer = require('react-dom/server');
 var Redux = require('redux');
 var Provider = require('react-redux').Provider;
 
-var Home = require('../views/index.jsx');
 var ReactRouter = require('react-router');
 
-var db = require('mysql');
 var addSong = require('../views/functions/addSong.js');
-
-/*
-var connection = db.createConnection({
-	host     : "localhost",
-	user     : "root",
-	password : "AMosshart7!",
-	database : "ERDB"
-});
-*/
+var playNextSong = require('../views/functions/playNextSong.js')
 
 function reducer(state) { return state; }
+
+
+
+router.get('/playNextSong', function(req,res){
+	var song = playNextSong.playNextSong();
+	console.log(JSON.stringify(song));
+
+	res.send("Playing: ");
+});
 
 
 //Handles the get request (when a user loads the page)
@@ -39,7 +37,7 @@ router.get('*', function(req, res){
 		var store = Redux.createStore(reducer, initialState);
 
 		//Finds a route that matches the url specified
-		ReactRouter.match({	
+		ReactRouter.match({
 
 				//uses routes.jsx to find the match
 routes: require('./routes.jsx'),
@@ -64,11 +62,8 @@ res.send(html);
 });
 
 router.post('/addSong', function(req,res){
-
 addSong.addSong(req.body.songTitle, req.body.songURL, req.body.thumbnailURL);
 console.log(req.body);
-
-
 });
 
 
