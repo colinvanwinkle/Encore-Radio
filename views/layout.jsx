@@ -9,6 +9,8 @@ var ReactDOM = require('react-dom');
 var connect  = require('react-redux').connect;
 var YouTube = require('youtube-node');
 var Modal = require('react-bootstrap/lib/Modal');
+var Nav = require('react-bootstrap/lib/Nav')
+var NavItem = require('react-bootstrap/lib/NavItem')
 var Button = require('react-bootstrap/lib/Button');
 var ReactPlayer = require('react-player');
 var youTube = new YouTube();
@@ -46,15 +48,32 @@ export default class SearchAndReco extends React.Component {
 		return (
 				<div className="col-md-3 col-md-offset-1
 				row "id="Search">
-				<SearchBar />
-				<Test />
+        		<Test />
 				</div>
 			   );
 	}
 }
 
+class Test extends React.Component {
+
+	handleSelect(selectedKey) {
+  alert('selected ' + selectedKey);
+}
+
+  render(){
+  return (
+    <Nav bsStyle="pills" activeKey={1} onSelect={handleSelect}>
+      <NavItem eventKey={1} href="/home">NavItem 1 content</NavItem>
+      <NavItem eventKey={2} title="Item">NavItem 2 content</NavItem>
+      <NavItem eventKey={3} disabled>NavItem 3 content</NavItem>
+    </Nav>
+    );
+
+  }
+}
 
 //Component that conains all the search results when search button is clicked
+	/**
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
@@ -70,7 +89,6 @@ class SearchBar extends React.Component {
 			songs: ''
 		};
 	}
-
 	//the temporary button click will trigger this function and it will play the
 	//next song in queue
 	handlePlayNextSong(){
@@ -82,17 +100,9 @@ class SearchBar extends React.Component {
 				});
 
 		alert("Hello!");
-
 	}
 
 	//Fires when the search button is clicked
-	handleClick() {
-		//moved the youtube search code into the handleChange event, so this
-		//function doesn't do anything
-		this.setState({text: ''});
-	}
-
-	handleChange(event){
 		this.setState({value: event.target.value});
 
 		var that = this;
@@ -131,8 +141,6 @@ class SearchBar extends React.Component {
 			    		<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
 							<span className="glyphicon glyphicon-search"></span>
 						</Button>
-						<Button onClick={this.handlePlayNextSong.bind(this)}>Play Next Song</Button>
-
 					</div>
 				</div>
 				<div id="scrollTest">
@@ -164,7 +172,7 @@ class SearchBar extends React.Component {
 				</div>
 				);
 	}
-}
+}**/
 
 class AudioPlayer extends React.Component{
 
