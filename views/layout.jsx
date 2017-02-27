@@ -9,6 +9,8 @@ var ReactDOM = require('react-dom');
 var connect  = require('react-redux').connect;
 var YouTube = require('youtube-node');
 var Modal = require('react-bootstrap/lib/Modal');
+var Nav = require('react-bootstrap/lib/Nav')
+var NavItem = require('react-bootstrap/lib/NavItem')
 var Button = require('react-bootstrap/lib/Button');
 var ReactPlayer = require('react-player');
 var youTube = new YouTube();
@@ -27,7 +29,7 @@ var axios = require('axios');
  */
 class Body extends React.Component {
 	render() {
-		return ( 
+		return (
 				<div className="row" id="body">
 				<Queue />
 				<SearchAndReco />
@@ -42,14 +44,32 @@ class Body extends React.Component {
  */
 export default class SearchAndReco extends React.Component {
 	render() {
-		return ( 
+		return (
 				<div className="col-md-3 col-md-offset-1
-				row "id="Search"> 
+				row "id="Search">
 				<SearchBar />
-
+        <Test />
 				</div>
 			   );
 	}
+}
+
+class Test extends React.Component {
+
+function handleSelect(selectedKey) {
+  alert('selected ' + selectedKey);
+}
+
+  render(){
+  return (
+    <Nav bsStyle="pills" activeKey={1} onSelect={handleSelect}>
+      <NavItem eventKey={1} href="/home">NavItem 1 content</NavItem>
+      <NavItem eventKey={2} title="Item">NavItem 2 content</NavItem>
+      <NavItem eventKey={3} disabled>NavItem 3 content</NavItem>
+    </Nav>
+    );
+
+  }
 }
 
 //Component that conains all the search results when search button is clicked
@@ -69,7 +89,7 @@ class SearchBar extends React.Component {
 				return f.container == 'mp4' && !f.encoding; }, requestOptions:
 				{headers : {
 				'Access-Control-Allow-Origin' :
-				'*',	
+				'*',
 				'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
 				'Access-Control-Allow-Headers' : 'Content-Type'
 				}}});
@@ -79,7 +99,7 @@ class SearchBar extends React.Component {
 
 	//Fires when the search button is clicked
 	handleClick() {
-		this.setState({text: ''});	
+		this.setState({text: ''});
 	}
 
 	handleChange(event){
@@ -120,7 +140,7 @@ class SearchBar extends React.Component {
 						onChange={this.handleChange.bind(this)} />
 			    		<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
 							<span className="glyphicon glyphicon-search"></span>
-						</Button>  
+						</Button>
 					</div>
 				</div>
 				<div id="scrollTest">
@@ -245,7 +265,7 @@ return (
 	</html>
 	);
 		}
-}); 
+});
 
 
 //Used for redux
