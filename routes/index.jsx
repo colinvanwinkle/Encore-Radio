@@ -15,17 +15,31 @@ var Provider = require('react-redux').Provider;
 var ReactRouter = require('react-router');
 
 var addSong = require('../views/functions/addSong.js');
-var playNextSong = require('../views/functions/playNextSong.js')
+
+var db = require('mysql');
+var connection = db.createConnection({
+    host     : "localhost",
+    user     : "cvanwinkle",
+    password : "Legends!",
+    database : "ERDB"
+});
+
+const songQuery = 'SELECT * FROM (SELECT * FROM Songs ORDER BY Added_Time) song LIMIT 1'
+
 
 function reducer(state) { return state; }
 
-
-
+//finds the next song to be played by getting the next song in queue
 router.get('/playNextSong', function(req,res){
-	var song = playNextSong.playNextSong();
-	console.log(JSON.stringify(song));
+     connection.query(songQuery, function(error, results, fields){
+	    if (error) throw error;
+			res.send(results[0]);
+	  });
 
-	res.send("Playing: ");
+    var query = 'DELETE FROM Songs ORDER BY Added_Time LIMIT 1'
+    connection.query(query, function(error, results, fields){
+      if (error) throw error;
+    });
 });
 
 

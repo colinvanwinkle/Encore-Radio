@@ -5,11 +5,11 @@ export default class SongBar extends React.Component {
 		return ( 
 				<div className="SongBar">  
 				<button
-				className="Like"><span
+				className="Like">0 <span
 				className="glyphicon
 				glyphicon-thumbs-up"></span></button>
 				<button
-				className="Dislike"><span
+				className="Dislike">0 <span
 				className="glyphicon
 				glyphicon-thumbs-down"></span></button>
 				</div>

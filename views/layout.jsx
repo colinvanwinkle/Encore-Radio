@@ -12,7 +12,8 @@ var Modal = require('react-bootstrap/lib/Modal');
 var Nav = require('react-bootstrap/lib/Nav')
 var NavItem = require('react-bootstrap/lib/NavItem')
 var Button = require('react-bootstrap/lib/Button');
-var ReactPlayer = require('react-player');
+var Tab = require('react-bootstrap/lib/Tab');
+var Tabs = require('react-bootstrap/lib/Tabs');
 var youTube = new YouTube();
 youTube.setKey('AIzaSyBT8ce6NXejMyBQJ6vJYTV9MgNW6tXyQiY');
 //var audioGetter = require('./functions/getAudio.js');
@@ -32,77 +33,74 @@ class Body extends React.Component {
 		return (
 				<div className="row" id="body">
 				<Queue />
-				<SearchAndReco />
-				<AudioPlayer/>
+				<SearchTabs />
 				</div>
 			   );
 	}
 }
 
 /**
- * SearchAndReco component located inside the body and consists of the search
+ * SearchTabs component located inside the body and consists of the search
  * bar, and eventually the suggested song tab
  */
-export default class SearchAndReco extends React.Component {
+export default class SearchTabs extends React.Component {
 	render() {
 		return (
 				<div className="col-md-3 col-md-offset-1
 				row "id="Search">
-        		<Test />
+				<Test />
 				</div>
 			   );
 	}
 }
 
 class Test extends React.Component {
-
-	handleSelect(selectedKey) {
-  alert('selected ' + selectedKey);
-}
-
-  render(){
-  return (
-    <Nav bsStyle="pills" activeKey={1} onSelect={handleSelect}>
-      <NavItem eventKey={1} href="/home">NavItem 1 content</NavItem>
-      <NavItem eventKey={2} title="Item">NavItem 2 content</NavItem>
-      <NavItem eventKey={3} disabled>NavItem 3 content</NavItem>
-    </Nav>
-    );
-
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			      activeTab: props.activeTab || 1
+		};
+		this.handleSelect = this.handleSelect.bind(this);
+	}
+	render(){
+		return (
+			<Tabs justified activeKey={this.state.activeTab} onSelect={this.handleSelect}>
+		        <Tab eventKey={1} title="Search"><SearchBar /></Tab>
+				<Tab eventKey={2} title="Requests">KB Sucks</Tab>
+				<Tab eventKey={3} title="Queue">KB sucks</Tab>
+			</Tabs>
+			);
+	}
+	handleSelect(selectedTab) {
+    	this.setState({
+		      activeTab: selectedTab
+      	});
+	}
 }
 
 //Component that conains all the search results when search button is clicked
-	/**
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
 		var test = []
-		for (var i = 0; i < 10; i++) {
-			test[i] = "http://www.cityrider.com/fixed/43aspect.png";
-		}
+			for (var i = 0; i < 10; i++) {
+				test[i] = "http://www.cityrider.com/fixed/43aspect.png";
+			}
 		this.state = {
-			value: '',
-			text: '',
-			titles: '',
-			urls: test,
-			songs: ''
+value: '',
+	   text: '',
+	   titles: '',
+	   urls: test,
+	   songs: ''
 		};
 	}
-	//the temporary button click will trigger this function and it will play the
-	//next song in queue
-	handlePlayNextSong(){
-		axios.get('/playNextSong').then(function (response) {
-				console.log("This is the reponse: " + JSON.stringify(response));
-				})
-		.catch(function (error) {
-				console.log(error);
-				});
 
-		alert("Hello!");
+	handleClick() {
+		this.setState({text: ''});
 	}
+	handleChange(event) {
 
-	//Fires when the search button is clicked
+		//Fires when the search button is clicked
 		this.setState({value: event.target.value});
 
 		var that = this;
@@ -134,14 +132,14 @@ class SearchBar extends React.Component {
 		return (
 				<div id="SearchResults">
 				<div className="row searchInput">
-					<div className="input-group stylish-input-group">
-	            		<input value = {this.state.value} type="text"
-						class="form-control" id="SearchInput" placeholder="Search"
-						onChange={this.handleChange.bind(this)} />
-			    		<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
-							<span className="glyphicon glyphicon-search"></span>
-						</Button>
-					</div>
+				<div className="input-group stylish-input-group">
+				<input value = {this.state.value} type="text"
+				class="form-control" id="SearchInput" placeholder="Search"
+				onChange={this.handleChange.bind(this)} />
+				<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
+				<span className="glyphicon glyphicon-search"></span>
+				</Button>
+				</div>
 				</div>
 				<div id="scrollTest">
 				<div className="row resultList">
@@ -152,43 +150,28 @@ class SearchBar extends React.Component {
 				backgroundColor={'#000D41'} title={this.state.titles[1]} url={this.state.urls[1]} />
 				<SearchResult songURL={this.state.songs[2]}
 				backgroundColor={'#FF6867'} title={this.state.titles[2]} url={this.state.urls[2]} />
-				<SearchResult songURL={this.state.songs[3]}
+					<SearchResult songURL={this.state.songs[3]}
 				backgroundColor={'#000D41'} title={this.state.titles[3]} url={this.state.urls[3]} />
-				<SearchResult songURL={this.state.songs[4]}
+					<SearchResult songURL={this.state.songs[4]}
 				backgroundColor={'#FF6867'} title={this.state.titles[4]} url={this.state.urls[4]} />
-				<SearchResult songURL={this.state.songs[5]}
+					<SearchResult songURL={this.state.songs[5]}
 				backgroundColor={'#000D41'} title={this.state.titles[5]} url={this.state.urls[5]} />
-				<SearchResult songURL={this.state.songs[6]}
+					<SearchResult songURL={this.state.songs[6]}
 				backgroundColor={'#FF6867'} title={this.state.titles[6]} url={this.state.urls[6]} />
-				<SearchResult songURL={this.state.songs[7]}
+					<SearchResult songURL={this.state.songs[7]}
 				backgroundColor={'#000D41'} title={this.state.titles[7]} url={this.state.urls[7]} />
-				<SearchResult songURL={this.state.songs[8]}
+					<SearchResult songURL={this.state.songs[8]}
 				backgroundColor={'#FF6867'} title={this.state.titles[8]} url={this.state.urls[8]} />
-				<SearchResult songURL={this.state.songs[9]}
+					<SearchResult songURL={this.state.songs[9]}
 				backgroundColor={'#000D41'} title={this.state.titles[9]} url={this.state.urls[9]} />
-				</ul>
-				</div>
-				</div>
-				</div>
-				);
+					</ul>
+					</div>
+					</div>
+					</div>
+					);
 	}
-}**/
-
-class AudioPlayer extends React.Component{
-
-	componentDidMount(){
-			alert("Audioplayer mounted!");
-
-
-	}
-	render(){
-
-		return (
-			<ReactPlayer url="" Playing/>
-		)
-	}
-
 }
+
 
 //Contains an individual search result (one row) that is inserted into the
 //SearchBar component 10 times.
@@ -200,32 +183,32 @@ class SearchResult extends React.Component {
 	handleAdd(event){
 
 
-alert(this.props.title + "\n" + this.props.songURL + "\n" +
-		this.props.url);
+		alert(this.props.title + "\n" + this.props.songURL + "\n" +
+				this.props.url);
 
-var data = {
-	songTitle: this.props.title,
-	songURL: this.props.songURL,
-	thumbnailURL: this.props.url
-};
+		var data = {
+songTitle: this.props.title,
+		   songURL: this.props.songURL,
+		   thumbnailURL: this.props.url
+		};
 
-axios.post('/addSong', data).then(function (response) {
-		console.log(response);
-		})
-.catch(function (error) {
-		console.log(error);
-		});
-}
+		axios.post('/addSong', data).then(function (response) {
+				console.log(response);
+				})
+		.catch(function (error) {
+				console.log(error);
+				});
+	}
 
-//Renders an individual row component
-render() {
-	return (
-			<div onClick={this.handleAdd.bind(this)}  style={{backgroundColor: this.props.backgroundColor}} className="row SearchResult">
-			<img className="ResultPic" src={this.props.url}/>
-			<p className="ResultTitle">{this.props.title}</p>
-			</div>
-		   );
-}
+	//Renders an individual row component
+	render() {
+		return (
+				<div onClick={this.handleAdd.bind(this)}  style={{backgroundColor: this.props.backgroundColor}} className="row SearchResult">
+				<img className="ResultPic" src={this.props.url}/>
+				<p className="ResultTitle">{this.props.title}</p>
+				</div>
+			   );
+	}
 }
 
 

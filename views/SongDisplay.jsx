@@ -1,13 +1,20 @@
 var React = require('react');
 var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
-
+var axios = require('axios');
 export default class SongDisplay extends React.Component {
+
+
+	constructor(props){
+		super(props);
+	}
+
+
 	render() {
-		return ( 
+		return (
 				<div className="SongDisplay">
 				<img className="SongPic"
-				src="http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg"
+				src= {this.props.thumbnail}
 				/>
 				</div>
 			   );

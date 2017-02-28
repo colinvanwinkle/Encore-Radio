@@ -91,14 +91,13 @@
 	font-family:'Carrois Gothic SC';
 	color:white;
 	margin-left:2.7em;
-	overflow-y:hidden;
+	overflow-y:hidden;  
 }
 
 .SearchResult { 
 	width:20em;
 	height:2.5em;
 }
-
 .QueuedSong {
   background-image: url(http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg);
   background-size: fill;
