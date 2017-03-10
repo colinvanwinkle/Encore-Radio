@@ -1,6 +1,6 @@
 #nav {
-  background-color:#000D41;
   color:#FF6867;
+  margin-bottom:2em;
 }
 
 #logo {
@@ -12,8 +12,17 @@
 .fill {
 }
 
+.tab {
+	color:white;
+}
+
+#TabTest {
+}
+
 #main {
-	background-color: #2f527b;
+	background-image:
+	url('https://www.walldevil.com/wallpapers/a51/tokyo-wallpaper-photography-city-scape-cityscape-grayscale-styles-cityscapes.jpg');
+	-webkit-background-size: cover;	
 	border:0;
 	max-width:98%;
 	padding-right:0px;
@@ -21,10 +30,18 @@
 }
 
 .HelpModal {
-  	background-color:#000D41;
+  	background-color:#000000;
 }
 
 .Login {
+	background:transparent;
+	border:0;
+	font-size:1.5em;
+	margin-top:1em;
+  	font-family:'Carrois Gothic SC';
+}
+
+.Register {
 	background:transparent;
 	border:0;
 	font-size:1.5em;
@@ -44,7 +61,7 @@
   border-radius:25px;
   height:60vh;
   margin-top:50px;
-  background-color:#000D41;
+  background-color:#000000;
   box-shadow: 0 2px 5px 0 rgba(244, 104, 66,0.16),0 2px 10px 0 rgba(244, 104, 66,0.12);
 }
 
@@ -60,7 +77,7 @@
   border-radius:25px;
   height:60vh;
   margin-top:50px;
-  background-color:#000D41;
+  background-color:#000000;
   overflow-y:hidden;
   overflow-x:hidden;
 }
@@ -72,17 +89,26 @@
 	overflow-x:hidden;
 }
 
+#QueueResults {
+	width:100%;
+	height:100%;
+	overflow-y:hidden;
+	overflow-x:hidden;
+}
+
+#Tabs {
+}
 
 .resultList {
 	width:100%;
-	height:100%;
+	height:45vh;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
 
 .ResultPic {
-	height:2.5em;
-	width:2.5em;
+	height:2em;
+	width:2em;
 	max-height:100%;
 	max-width:100%;
 }
@@ -90,7 +116,6 @@
 .ResultTitle {
 	font-family:'Carrois Gothic SC';
 	color:white;
-	margin-left:2.7em;
 	overflow-y:hidden;  
 }
 
@@ -98,48 +123,62 @@
 	width:20em;
 	height:2.5em;
 }
+.QueueResult { 
+	width:20em;
+	height:2.5em;
+}
+
 .QueuedSong {
   background-image: url(http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg);
   background-size: fill;
   background-repeat: no-repeat;
   height:fill;
+  margin-top:3em;
+  margin-bottom:3em;
   padding:0;
   border: 1px solid #ccc;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
   display: inline-block;
-  margin: 2em 1em 1em 0;
-  padding: 0;
-  position: relative;
-  width:15%;
   
 }
 
-.QueuedSongMain {
-  background-image: url(http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg);
-  margin-left:2%;
-  margin-right:1%;
-  margin-top:1%;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  margin: 0 1em 1em 0;
-  padding: 0;
-  position: relative;
-  display: inline-block;
-  width: 20%;
+.QueuedSongMainElem {
+  margin-right:auto;
+  margin-left:auto;
+  display:block;
 }
 
 .SongDisplay {
-  height:fill;
-  width:fill;
+  height:100px;
+  width:100px;
+  margin-top:120px;
+}
+
+#MainPic {
+
+}
+
+#MainBar {
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+
+#MainSong {
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
 }
 
 .SongPic {
+	width:fill;
   max-height:100%;
   max-width:100%;
 }
 
 .SongBar {
-  height:20%;
+  height:40px;
+  width:100px;
   width:fill;
   font-size:0.75vw;
   background-color:#011F53;
@@ -151,7 +190,7 @@
   margin-top:17%;
   margin: 7em 0 0 2em;
   margin-left:3em;
-  background-color:#000D41;
+  background-color:#000000;
   padding: 0;
   position: relative;
 }

@@ -54,10 +54,12 @@ var mysqlDateString = getDateTime();
 var hashID = hash({ID: "testURL" + JSON.stringify(songURL) + Math.random()});
 
 /* The command to query the database */
-var query = 'INSERT INTO Songs VALUES ("testURL",' + JSON.stringify(songURL) + ', "00:00:00" ,' + JSON.stringify(title) + ',' + JSON.stringify(thumbnailURL) +', "' + hashID + '" , "' +  mysqlDateString + '");'
+var queryCommand= 'INSERT INTO Songs VALUES ("testURL",' +
+JSON.stringify(songURL) + ', CURRENT_TIMESTAMP ,' + JSON.stringify(title) + ',' + JSON.stringify(thumbnailURL) +', "' +
+hashID + '" , "' +  mysqlDateString + '", 0,0);'
 
 
-connection.query(query,  function (error, results, fields) {
+connection.query(queryCommand,  function (error, results, fields) {
 		if (error) throw error;
 		});
 

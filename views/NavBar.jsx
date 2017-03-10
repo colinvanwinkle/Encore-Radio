@@ -3,6 +3,7 @@ var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 import Help from './Help.jsx';
 import Login from './Login.jsx';
+import Register from './Register.jsx';
 //move this back under <div classnae...> when Help is fixed
 //<Help />
 /**
@@ -17,8 +18,11 @@ export default class NavBar extends React.Component {
 				<div className="col-md-4 col-md-offset-4">
 				<h1 id="logo">Encore Radio</h1>
 				</div>
-				<div className="col-md-1 col-md-offset-2">
+				<div className="col-md-1">
 				<Login />
+				</div>
+				<div className="col-md-1">
+				<Register />
 				</div>
 				<div className="col-md-1">
 				<Help />

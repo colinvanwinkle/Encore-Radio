@@ -22,6 +22,7 @@ var fs = require('fs');
 var ytdl = require('ytdl-core');
 import NavBar from './NavBar.jsx';
 import Queue from './Queue.jsx';
+import QueueTab from './QueueTab.jsx';
 var db = require('mysql');
 var axios = require('axios');
 /**
@@ -67,7 +68,7 @@ class Test extends React.Component {
 			<Tabs justified activeKey={this.state.activeTab} onSelect={this.handleSelect}>
 		        <Tab eventKey={1} title="Search"><SearchBar /></Tab>
 				<Tab eventKey={2} title="Requests">KB Sucks</Tab>
-				<Tab eventKey={3} title="Queue">KB sucks</Tab>
+				<Tab eventKey={3} title="Queue"><QueueTab /></Tab>
 			</Tabs>
 			);
 	}
@@ -82,30 +83,24 @@ class Test extends React.Component {
 class SearchBar extends React.Component {
 	constructor(props){
 		super(props);
-		var test = []
+		var placeholder = []
 			for (var i = 0; i < 10; i++) {
-				test[i] = "http://www.cityrider.com/fixed/43aspect.png";
+				placeholder[i] = "http://www.cityrider.com/fixed/43aspect.png";
 			}
 		this.state = {
-value: '',
-	   text: '',
+		 value: '',
 	   titles: '',
-	   urls: test,
+	   urls: placeholder,
 	   songs: ''
 		};
 	}
 
 	handleClick() {
-		this.setState({text: ''});
-	}
-	handleChange(event) {
-
 		//Fires when the search button is clicked
-		this.setState({value: event.target.value});
 
 		var that = this;
 		//Searches for the videos
-		youTube.search(event.target.value, 10, function(error, result){
+		youTube.search(that.state.value, 10, function(error, result){
 				var i = 0;
 				var vidTitles = new Array();
 				var tempThumbUrls = new Array();
@@ -121,8 +116,26 @@ value: '',
 				//set the state of the variables so that they are applied to the
 				//elements below
 				that.setState({titles: vidTitles, urls: tempThumbUrls, songs: songURLs});
+				that.setState({value: ''});
 
 				}); //end of youtube search
+	}
+	handleChange(event) {
+		this.setState({value: event.target.value});
+	}
+
+	clearResults(){
+
+		var thumbURLS = new Array(10);
+
+			for (var i = 0; i < 10; i++)
+				thumbURLS[i] = "http://www.cityrider.com/fixed/43aspect.png";
+
+		this.setState({
+			titles: '',
+			songs: '',
+			urls: thumbURLS
+		});
 	}
 
 
@@ -133,9 +146,8 @@ value: '',
 				<div id="SearchResults">
 				<div className="row searchInput">
 				<div className="input-group stylish-input-group">
-				<input value = {this.state.value} type="text"
-				class="form-control" id="SearchInput" placeholder="Search"
-				onChange={this.handleChange.bind(this)} />
+				<input value = {this.state.value} onChange={this.handleChange.bind(this)} type="text"
+				class="form-control" id="SearchInput" placeholder="Search" />
 				<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
 				<span className="glyphicon glyphicon-search"></span>
 				</Button>
@@ -144,26 +156,26 @@ value: '',
 				<div id="scrollTest">
 				<div className="row resultList">
 				<ul>
-				<SearchResult songURL={this.state.songs[0]}
+			<SearchResult songURL={this.state.songs[0]} clear={this.clearResults.bind(this)}
 				backgroundColor={'#FF6867'} title={this.state.titles[0]} url={this.state.urls[0]} />
-				<SearchResult songURL={this.state.songs[1]}
-				backgroundColor={'#000D41'} title={this.state.titles[1]} url={this.state.urls[1]} />
-				<SearchResult songURL={this.state.songs[2]}
+			<SearchResult songURL={this.state.songs[1]} clear={this.clearResults.bind(this)}
+				backgroundColor={'#000000'} title={this.state.titles[1]} url={this.state.urls[1]} />
+			<SearchResult songURL={this.state.songs[2]} clear={this.clearResults.bind(this)}
 				backgroundColor={'#FF6867'} title={this.state.titles[2]} url={this.state.urls[2]} />
-					<SearchResult songURL={this.state.songs[3]}
-				backgroundColor={'#000D41'} title={this.state.titles[3]} url={this.state.urls[3]} />
-					<SearchResult songURL={this.state.songs[4]}
+			<SearchResult songURL={this.state.songs[3]} clear={this.clearResults.bind(this)}
+				backgroundColor={'#000000'} title={this.state.titles[3]} url={this.state.urls[3]} />
+			<SearchResult songURL={this.state.songs[4]} clear={this.clearResults.bind(this)}
 				backgroundColor={'#FF6867'} title={this.state.titles[4]} url={this.state.urls[4]} />
-					<SearchResult songURL={this.state.songs[5]}
-				backgroundColor={'#000D41'} title={this.state.titles[5]} url={this.state.urls[5]} />
-					<SearchResult songURL={this.state.songs[6]}
+			<SearchResult songURL={this.state.songs[5]} clear={this.clearResults.bind(this)}
+				backgroundColor={'#000000'} title={this.state.titles[5]} url={this.state.urls[5]} />
+			<SearchResult songURL={this.state.songs[6]} clear={this.clearResults.bind(this)}
 				backgroundColor={'#FF6867'} title={this.state.titles[6]} url={this.state.urls[6]} />
-					<SearchResult songURL={this.state.songs[7]}
-				backgroundColor={'#000D41'} title={this.state.titles[7]} url={this.state.urls[7]} />
-					<SearchResult songURL={this.state.songs[8]}
+			<SearchResult songURL={this.state.songs[7]} clear={this.clearResults.bind(this)}
+				backgroundColor={'#000000'} title={this.state.titles[7]} url={this.state.urls[7]} />
+			<SearchResult songURL={this.state.songs[8]} clear={this.clearResults.bind(this)}
 				backgroundColor={'#FF6867'} title={this.state.titles[8]} url={this.state.urls[8]} />
-					<SearchResult songURL={this.state.songs[9]}
-				backgroundColor={'#000D41'} title={this.state.titles[9]} url={this.state.urls[9]} />
+			<SearchResult songURL={this.state.songs[9]} clear={this.clearResults.bind(this)}
+				backgroundColor={'#000000'} title={this.state.titles[9]} url={this.state.urls[9]} />
 					</ul>
 					</div>
 					</div>
@@ -182,22 +194,22 @@ class SearchResult extends React.Component {
 	//is clicked and should add the song to the DB
 	handleAdd(event){
 
-
-		alert(this.props.title + "\n" + this.props.songURL + "\n" +
-				this.props.url);
-
 		var data = {
-songTitle: this.props.title,
+			 songTitle: this.props.title,
 		   songURL: this.props.songURL,
 		   thumbnailURL: this.props.url
 		};
 
 		axios.post('/addSong', data).then(function (response) {
 				console.log(response);
+
 				})
 		.catch(function (error) {
 				console.log(error);
 				});
+
+			this.props.clear();
+
 	}
 
 	//Renders an individual row component

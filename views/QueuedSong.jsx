@@ -11,9 +11,9 @@ import SongDisplay from './SongDisplay.jsx';
 export default class QueuedSong extends React.Component {
 	render() {
 		return (
-				<div className="col-md-2 QueuedSong">
-				<SongDisplay thumbnail="http://icdn3.digitaltrends.com/image/chance-the-rapper-album-1200x630-c.jpg" />
-				<SongBar />
+				<div className="col-md-2 col-md-offset-1 QueuedSon">
+				<SongDisplay thumbnail={this.props.thumbnailURL} />
+				<SongBar hash={this.props.hash}  />
 				</div>
 			   );
 	}
