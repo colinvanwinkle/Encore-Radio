@@ -11,9 +11,21 @@ import SongDisplay from './SongDisplay.jsx';
 export default class QueuedSong extends React.Component {
 	render() {
 		return (
-				<div className="col-md-2 col-md-offset-1 QueuedSon">
-				<SongDisplay thumbnail={this.props.thumbnailURL} />
-				<SongBar hash={this.props.hash}  />
+				<div className="col-md-2 col-md-offset-1">
+				<div className="QueuedSong">
+				<div className="SongDisplay">
+					<img className="SongPic"
+					src={this.props.thumbnailURL} />
+				</div>
+				<div className="SongBar">
+			    	<button className="Like">
+						<span className="glyphicon glyphicon-thumbs-up"></span>
+					</button>
+			    	<button className="Dislike">
+						<span className="glyphicon glyphicon-thumbs-down"></span>
+					</button>
+				</div>
+				</div>
 				</div>
 			   );
 	}

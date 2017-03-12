@@ -18,7 +18,7 @@ export default class QueueTab extends React.Component {
 		super(props);
 		var thumbnailURLS = new Array(10)
 			for (var i = 0; i < 10; i++)
-				thumbnailURLS[i] = "https://www.praisecharts.com/themes/praisecharts/images/layout/music-placeholder.png";
+				thumbnailURLS[i] = "http://www.cityrider.com/fixed/43aspect.png";
 
 		this.state = {
 			value: '',
@@ -32,21 +32,22 @@ export default class QueueTab extends React.Component {
 componentDidMount(){
 	this.updateQueueTab();
 	var that = this;
-	setInterval(function(){ that.updateQueueTab(); }, 1000)
+	setInterval(function(){ that.updateQueueTab(); }, 2000)
 }
 
 updateQueueTab(){
 	var that = this;
 	axios.get('/updateQueueTab').then(function(response){
-		var i = 1;
+		var i = 2;
 		for (; i < response.data.length; i++){
-			that.state.titles[i-1] = response.data[i].Song_Title;
-			that.state.thumbnailURLS[i-1] = response.data[i].Thumbnail;
+			that.state.titles[i-2] = response.data[i].Song_Title;
+			that.state.thumbnailURLS[i-2] = response.data[i].Thumbnail;
 		}
 
-		for (; i < 11; i++){
-			that.state.titles[i-1] = "";
-			that.state.thumbnailURLS[i-1] = "https://www.praisecharts.com/themes/praisecharts/images/layout/music-placeholder.png";
+		for (; i < 12; i++){
+			that.state.titles[i-2] = "";
+			that.state.thumbnailURLS[i-2] =
+			"http://www.cityrider.com/fixed/43aspect.png";
 		}
 
 	});

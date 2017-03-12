@@ -16,6 +16,10 @@ module.exports = (
 				<IndexRoute component={require('../views/index.jsx')}/>
 			</Route>
 
+			<Route path= '/nik' component ={require('../views/test.jsx')}>
+				<IndexRoute component={require('../views/index.jsx')}/>
+			</Route>
+
 	</Router>
 
 		);

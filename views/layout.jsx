@@ -23,6 +23,7 @@ var ytdl = require('ytdl-core');
 import NavBar from './NavBar.jsx';
 import Queue from './Queue.jsx';
 import QueueTab from './QueueTab.jsx';
+import RequestTab from './RequestTab.jsx';
 var db = require('mysql');
 var axios = require('axios');
 /**
@@ -67,7 +68,7 @@ class Test extends React.Component {
 		return (
 			<Tabs justified activeKey={this.state.activeTab} onSelect={this.handleSelect}>
 		        <Tab eventKey={1} title="Search"><SearchBar /></Tab>
-				<Tab eventKey={2} title="Requests">KB Sucks</Tab>
+				<Tab eventKey={2} title="Requests"><RequestTab /></Tab>
 				<Tab eventKey={3} title="Queue"><QueueTab /></Tab>
 			</Tabs>
 			);
@@ -216,8 +217,8 @@ class SearchResult extends React.Component {
 	render() {
 		return (
 				<div onClick={this.handleAdd.bind(this)}  style={{backgroundColor: this.props.backgroundColor}} className="row SearchResult">
-				<img className="ResultPic" src={this.props.url}/>
-				<p className="ResultTitle">{this.props.title}</p>
+				<img className="ResultPic col-md-4" src={this.props.url}/>
+				<p className="ResultTitle col-md-8">{this.props.title}</p>
 				</div>
 			   );
 	}
@@ -243,6 +244,11 @@ render: function() {
 return (
 		<html>
 		<head>
+
+		<link
+		href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAACgUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREAEAAQAAEAAAAQAQAAAQAAABAQAAABAAAAEQAAAAEAAAAREQAAAREQABAAEAABAAAAEAAQAAEAAAAQABAAAQAAABAAEAABAAAAEAAQAAEREQARERAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AADBuwAA37cAAN+vAADfnwAA34cAAMO7AADfuwAA37sAAN+7AADfuwAAwYMAAP//AAD//wAA"
+		rel="icon" type="image/x-icon" />
+
 		<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"

@@ -17,7 +17,7 @@ module.exports = { queryDB:  function(username, password, cpassword, email, call
 		return;
 	}
 	
-	var User = { User_ID : username, Password : password, Email : email };
+	var User = { User_ID : username, Password : password, Email : email, Host: true };
 
 	connection.query('INSERT INTO User_Info SET ?', User, function(error, res) {
 		if(error) {

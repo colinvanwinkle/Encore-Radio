@@ -28,7 +28,6 @@ database : "ERDB",
 });
 
 
-
 function reducer(state) { return state; }
 //__________________________________________________________________________
 
@@ -73,7 +72,7 @@ router.get('/updateSongQueue', function(req,res){
 
 	const songQuery = 'SELECT * FROM (SELECT * FROM Songs ORDER BY Added_Time) song LIMIT 4'
 
-	
+
 
 	connection.query(songQuery, function(error, results, fields){
 			if (error) throw error;
@@ -103,7 +102,6 @@ router.get('/playNextSong', function(req,res){
 							});
 				}
 				});
-
 
 		});
 
@@ -165,26 +163,32 @@ router.post('/addSong', function(req,res){
 		console.log(req.body);
 		});
 
+var username;
 //Make database query to check user login
 router.post('/login', function(req,res){
-	console.log("LOGGIN IN");
 	login.queryDB(req.body.username, req.body.password,
 	function(error,result){
-		//Result stores the result of the login process	
 		if (result) {
-			//Update the frontend 
+			console.log(result);
+			res.send(result);
 		}
 	});
+	username = req.body.username;
 });
 
 //Register new account
 router.post('/register', function(req,res){
 	register.queryDB(
-		req.body.username, req.body.password, req.body.cpassword, req.body.email, 
+		req.body.username, req.body.password, req.body.cpassword, req.body.email,
 		function(error, result){
 			console.log("called back "+result);
 		}
 	);
+});
+
+//Try to host a station on a new, identical page
+router.post('/nik', function(req,res){
+	console.log("Nik's station page");
 });
 
 //-------------------------------------------------------------------

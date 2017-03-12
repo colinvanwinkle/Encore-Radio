@@ -1,3 +1,7 @@
+*:focus {
+	outline:none;
+}
+
 #nav {
   color:#FF6867;
   margin-bottom:2em;
@@ -107,16 +111,15 @@
 }
 
 .ResultPic {
-	height:2em;
-	width:2em;
-	max-height:100%;
-	max-width:100%;
+	width:5em;
+	height:100%;
 }
 
 .ResultTitle {
 	font-family:'Carrois Gothic SC';
 	color:white;
 	overflow-y:hidden;  
+	white-space:nowrap;
 }
 
 .SearchResult { 
@@ -129,39 +132,32 @@
 }
 
 .QueuedSong {
-  background-image: url(http://images.genius.com/b17a54d05a3de269cc6ea53c3f71f73e.1000x1000x1.jpg);
-  background-size: fill;
-  background-repeat: no-repeat;
-  height:fill;
-  margin-top:3em;
-  margin-bottom:3em;
-  padding:0;
-  border: 1px solid #ccc;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
   display: inline-block;
+  margin-top:10em;
+  width:6em;
+  height:8em;
   
 }
 
-.QueuedSongMainElem {
+.MainDisplay {
+  margin-top:6em;
+  margin-bottom:auto;
   margin-right:auto;
-  margin-left:auto;
+  margin-left:1em;
   display:block;
 }
 
-.SongDisplay {
-  height:100px;
-  width:100px;
-  margin-top:120px;
+.MainSongPic {
+	Width:12em;
+	Height:12em;
+	margin-right:1em;
 }
 
-#MainPic {
-
-}
-
-#MainBar {
-	margin-left:auto;
-	margin-right:auto;
-	display:block;
+.MainBar {
+	width:12em;
+	height:3em;
+	margin-left:1em;
 }
 
 #MainSong {
@@ -171,14 +167,13 @@
 }
 
 .SongPic {
-	width:fill;
-  max-height:100%;
-  max-width:100%;
+	width:7em;
+	height:7em;
 }
 
 .SongBar {
-  height:40px;
-  width:100px;
+  height:3em;
+  width:10.4em;
   width:fill;
   font-size:0.75vw;
   background-color:#011F53;
@@ -193,6 +188,20 @@
   background-color:#000000;
   padding: 0;
   position: relative;
+}
+
+.MainLike {
+  text-align:center;
+  background-color:#FFFFFF;
+  width:50%;
+  height:100%;
+}
+
+.MainDislike {
+  text-align:center;
+  background-color:#FFFFFF;
+  width:50%;
+  height:100%;
 }
 
 .Like {

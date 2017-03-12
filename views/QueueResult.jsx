@@ -6,7 +6,7 @@ export default class QueueResult extends React.Component {
 	render() {
 		return (
 				<div style={{backgroundColor: this.props.backgroundColor}}
-				className="row QueueResult">
+				className="row SearchResult">
 				<img className="ResultPic" src={this.props.url}/>
 				<p className="ResultTitle">{this.props.title}</p>
 				</div>

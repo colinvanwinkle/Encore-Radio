@@ -41,7 +41,9 @@ export default class SongBar extends React.Component {
 	}
 
 	upvote(){
+		console.log("in upvote");
 		if (this.props.hash){
+			console.log("posting to index!");
 
 			var that = this;
 			axios.post('/upvote', {upvoter: "USER_ID", songHash: this.props.hash}).then(function(response){

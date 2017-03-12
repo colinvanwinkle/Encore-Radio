@@ -12,7 +12,7 @@ var connection = db.createConnection({
 	database : "ERDB"
 });
 
-/** Maybe export username and password to the calling 
+/** Maybe export username and password to the calling
 	function and do the database query there **/
 
 export default class Login extends React.Component {
@@ -41,13 +41,14 @@ export default class Login extends React.Component {
 		   this.setState({password: e.target.value});
 	}
 	handleClick(event) {
-		
+
 		this.setState({showModal: false});
 
-		var data = {username: this.state.username, password: this.state.password};	
+		var data = {username: this.state.username, password: this.state.password};
 
+		console.log("Printing Response");
         axios.post('/login',data).then(function (response) {
-			console.log("RESPONSE: "+response.body); 
+			console.log("RESPONSE: "+JSON.stringify(response));
 		}).catch(function (error) {
 			console.log(error);
 		});
@@ -60,7 +61,7 @@ export default class Login extends React.Component {
 			{/*Open the Login Popup when clicking the Login button*/}
 			<button className="Login"
 			onClick={this.open.bind(this)}>
-			Login	
+			Login
 			</button>
 			<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
 				<Modal.Header closeButton>
@@ -68,17 +69,17 @@ export default class Login extends React.Component {
 				</Modal.Header>
 				<Modal.Body>
 					<p>Username</p>
-					<input  type = "text" 
-							name = "username" 
+					<input  type = "text"
+							name = "username"
 							value = {this.state.username}
 							onChange = {this.handleUsername}/>
 					<p>Password</p>
-					<input  type = "password" 
+					<input  type = "password"
 							name = "password"
 							value = {this.state.password}
 							onChange = {this.handlePassword}/>
 					<br/>
-					<Button className = "LoginButton" 
+					<Button className = "LoginButton"
 							onClick={this.handleClick.bind(this)} >
 						Login
 					</Button>
