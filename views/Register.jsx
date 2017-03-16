@@ -2,15 +2,7 @@ var React = require('react');
 var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 var axios = require('axios');
-var db = require('mysql');
-//var queryObj = require('./LoginQuery.js');
 
-var connection = db.createConnection({
-	host     : "localhost",
-	user     : "cvanwinkle",
-	password : "Legends!",
-	database : "ERDB"
-});
 
 /** Maybe export username and password to the calling 
 	function and do the database query there **/

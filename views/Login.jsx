@@ -2,15 +2,7 @@ var React = require('react');
 var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 var axios = require('axios');
-var db = require('mysql');
 var queryObj = require('./LoginQuery.js');
-
-var connection = db.createConnection({
-	host     : "localhost",
-	user     : "cvanwinkle",
-	password : "Legends!",
-	database : "ERDB"
-});
 
 /** Maybe export username and password to the calling
 	function and do the database query there **/
@@ -21,7 +13,9 @@ export default class Login extends React.Component {
 		this.state ={
 					showModal: false,
 					username: '',
-					password: ''
+					password: '',
+					isLoggedIn: false,
+					loginText: "Login"
 					};
 
 		this.handleUsername = this.handleUsername.bind(this);
@@ -43,17 +37,36 @@ export default class Login extends React.Component {
 	handleClick(event) {
 
 		this.setState({showModal: false});
+		var saveRef = this;
 
 		var data = {username: this.state.username, password: this.state.password};
-
-		console.log("Printing Response");
+		var result;
         axios.post('/login',data).then(function (response) {
-			console.log("RESPONSE: "+JSON.stringify(response));
+			result = JSON.stringify(response.data);
+			result = result.substring(1, result.length-1);
+			console.log("RESPONSE: "+JSON.stringify(response.config.data));
+			console.log("RESULT: "+result);
+
+			if(result === "Logging in") {
+
+				saveRef.setState({ isLoggedIn: true	});
+				saveRef.setState({ loginText: "Logout "+saveRef.state.username});
+
+			}
+
+			else if(result === "No user found" || result === "Wrong password") {
+				alert("Alert : "+result);
+			}
+
+
 		}).catch(function (error) {
 			console.log(error);
 		});
-		//alert("Hi");
+
+			
+	
 	}
+
 
 	render() {
 		return(
@@ -61,8 +74,18 @@ export default class Login extends React.Component {
 			{/*Open the Login Popup when clicking the Login button*/}
 			<button className="Login"
 			onClick={this.open.bind(this)}>
-			Login
+			{this.state.loginText}
 			</button>
+
+			{/*
+			if (isLoggedIn) {
+				button = <LogoutButton onClick={this.handleLogoutClick}	/>;
+		    } 
+			else {
+			    button = <LoginButton onClick={this.handleClick}/>;
+		    }
+			*/}
+
 			<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Login</Modal.Title>

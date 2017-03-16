@@ -11,6 +11,7 @@ import Register from './Register.jsx';
  * logo.
  * #TODO Add help, login, and sign up components
  */
+
 export default class NavBar extends React.Component {
 	render() {
 		return (

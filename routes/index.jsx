@@ -19,7 +19,7 @@ var login = require('../views/LoginQuery.js');
 var register = require('../views/RegisterQuery.js');
 
 var db = require('mysql');
-var connection = db.createConnection({
+var pool = db.createPool({
 host     : "localhost",
 user     : "cvanwinkle",
 password : "Legends!",
@@ -34,6 +34,8 @@ function reducer(state) { return state; }
 router.post('/upvote', function(req,res){
 	const getLikesQuery = 'SELECT Upvote FROM Songs WHERE SongID = ' + JSON.stringify(req.body.songHash);
 
+	pool.getConnection(function (error, connection) {
+
 	connection.query(getLikesQuery, function(error, results, fields){
 		if (error) throw error;
 
@@ -41,13 +43,16 @@ router.post('/upvote', function(req,res){
 	 connection.query(addLikeQuery, function(req, res){
 		 if (error) throw error;
 	 	 });
+		 connection.release();
 	 });
-
+});
 
 });
 
 router.post('/downvote', function(req,res){
 	const getLikesQuery = 'SELECT Downvote FROM Songs WHERE SongID = ' + JSON.stringify(req.body.songHash);
+
+	pool.getConnection(function (error, connection) {
 
 	connection.query(getLikesQuery, function(error, results, fields){
 		if (error) throw error;
@@ -57,29 +62,38 @@ router.post('/downvote', function(req,res){
 		 if (error) throw error;
 	 	 });
 	});
+	connection.release()
+});
 });
 
 router.get('/updateUpvoteDownvotes', function(req, res){
-	const getVotesQuery = 'SELECT Upvote, Downvote FROM Songs WHERE SongID = ' + JSON.stringify(req.query.songHash);
-	connection.query(getVotesQuery, function(error, results, fields){
-		res.send(results);
-	});
 
+	const getVotesQuery = 'SELECT Upvote, Downvote FROM Songs WHERE SongID = ' + JSON.stringify(req.query.songHash);
+	pool.getConnection(function (error, connection) {
+
+	connection.query(getVotesQuery, function(error, results, fields){
+		connection.release();
+
+		res.send(results);
+
+	});
+});
 });
 
 //periodcally called to update song queue
 router.get('/updateSongQueue', function(req,res){
 
 	const songQuery = 'SELECT * FROM (SELECT * FROM Songs ORDER BY Added_Time) song LIMIT 4'
-
+    pool.getConnection(function (error, connection) {
 
 
 	connection.query(songQuery, function(error, results, fields){
 			if (error) throw error;
+			connection.release();
 			res.send(results);
 			});
 
-
+		});
 });
 
 
@@ -89,6 +103,8 @@ router.get('/playNextSong', function(req,res){
 		const rowCountQuery = 'SELECT COUNT(*) as numSongs FROM Songs'
 		const deleteQuery = 'DELETE FROM Songs ORDER BY Added_Time LIMIT 1'
 		const startTimeQuery = 'UPDATE Songs SET Running_Time = CURRENT_TIMESTAMP WHERE Station_URL = "testURL"'
+
+		    pool.getConnection(function (error, connection) {
 		connection.query(rowCountQuery, function(error, results, fields){
 				if (error) throw error;
 				if (results[0].numSongs > 1){
@@ -97,24 +113,27 @@ router.get('/playNextSong', function(req,res){
 
 							connection.query(startTimeQuery, function(error, results, fields){
 								if (error) throw error;
+								connection.release();
 							});
 
 							});
 				}
 				});
 
+			});
 		});
 
 
 	router.get('/updateQueueTab', function(req,res){
 
 		var query = 'Select * FROM (SELECT * FROM Songs ORDER BY ADDED_TIME) song LIMIT 11'
-
+    pool.getConnection(function (error, connection) {
 		connection.query(query, function(error, results, fields){
 			if (error) throw error;
+			connection.release();
 			res.send(results);
 		});
-
+});
 	});
 
 
@@ -159,9 +178,13 @@ res.send(html);
 
 
 router.post('/addSong', function(req,res){
+	    pool.getConnection(function (error, connection) {
 		addSong.addSong(req.body.songTitle, req.body.songURL, req.body.thumbnailURL);
 		console.log(req.body);
+		connection.release();
+	});
 		});
+
 
 var username;
 //Make database query to check user login
@@ -169,7 +192,8 @@ router.post('/login', function(req,res){
 	login.queryDB(req.body.username, req.body.password,
 	function(error,result){
 		if (result) {
-			console.log(result);
+			console.log("RESULT: "+result);
+			//console.log("req and res"+JSON.stringify(req));
 			res.send(result);
 		}
 	});
