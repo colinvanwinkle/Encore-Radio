@@ -18,7 +18,7 @@ export default class NavBar extends React.Component {
 				<div className="row nav" id="nav">
 				<div className="col-md-4 col-md-offset-4">
 					<h1 id="logo">Encore Radio</h1>
-					{/*<img src="http:///i.imgur.com/6dV89XA.png"/> */}
+
 				</div>
 				<div className="col-md-1 col-md-offset-1">
 				<Login />

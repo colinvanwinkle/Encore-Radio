@@ -14,7 +14,7 @@ module.exports = { queryDB:  function(username, password, cpassword, email, call
 
 	if(password != cpassword) {
 		result = "Passwords do not match";
-		return;
+		return callback(callback_error,result);
 	}
 	
 	var User = { User_ID : username, Password : password, Email : email, Host: true };

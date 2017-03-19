@@ -66,11 +66,13 @@ class Test extends React.Component {
 	}
 	render(){
 		return (
-			<Tabs justified activeKey={this.state.activeTab} onSelect={this.handleSelect}>
-		        <Tab eventKey={1} title="Search"><SearchBar /></Tab>
-				<Tab eventKey={2} title="Requests"><RequestTab /></Tab>
-				<Tab eventKey={3} title="Queue"><QueueTab /></Tab>
-			</Tabs>
+			<div>
+				<Tabs id="Tabs" justified activeKey={this.state.activeTab} onSelect={this.handleSelect}>
+		        	<Tab eventKey={1} title="Search"><SearchBar /></Tab>
+					<Tab eventKey={2} title="Requests"><RequestTab /></Tab>
+					<Tab eventKey={3} title="Queue"><QueueTab /></Tab>
+				</Tabs>
+			</div>
 			);
 	}
 	handleSelect(selectedTab) {
@@ -98,7 +100,6 @@ class SearchBar extends React.Component {
 
 	handleClick() {
 		//Fires when the search button is clicked
-
 		var that = this;
 		//Searches for the videos
 		youTube.search(that.state.value, 10, function(error, result){
@@ -121,9 +122,6 @@ class SearchBar extends React.Component {
 
 				}); //end of youtube search
 	}
-	handleChange(event) {
-		this.setState({value: event.target.value});
-	}
 
 	clearResults(){
 
@@ -139,6 +137,10 @@ class SearchBar extends React.Component {
 		});
 	}
 
+	handleChange(event) {
+		this.setState({value: event.target.value});
+	}
+
 
 	//Renders all the searhc results and sets the values of their fields to the
 	//state of the component
@@ -147,8 +149,10 @@ class SearchBar extends React.Component {
 				<div id="SearchResults">
 				<div className="row searchInput">
 				<div className="input-group stylish-input-group">
-				<input value = {this.state.value} onChange={this.handleChange.bind(this)} type="text"
-				class="form-control" id="SearchInput" placeholder="Search" />
+				<input value = {this.state.value}
+				onChange={this.handleChange.bind(this)} type="text"
+				class="form-control" id="SearchInput" placeholder="Search"
+				/>
 				<Button className="SearchButton" onClick={this.handleClick.bind(this)}>
 				<span className="glyphicon glyphicon-search"></span>
 				</Button>
@@ -222,6 +226,34 @@ class SearchResult extends React.Component {
 				</div>
 			   );
 	}
+}
+
+class Fuck extends React.Component {
+	constructor(props){
+		super(props);
+		var placeholder = []
+			for (var i = 0; i < 10; i++) {
+				placeholder[i] = "http://www.cityrider.com/fixed/43aspect.png";
+			}
+		this.state = {
+		 value: '',
+	   titles: '',
+	   urls: placeholder,
+	   songs: ''
+		};
+	}
+	handleChange() {
+		alert("FUCK FUCK");
+	}
+	render() {
+		return(
+				<input value = {this.state.value}
+				onChange={this.handleChange.bind(this)} type="text"
+				class="form-control" id="SearchInput" placeholder="Search"
+				/>
+		);
+	}
+
 }
 
 

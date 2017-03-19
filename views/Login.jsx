@@ -3,6 +3,7 @@ var Modal = require('react-bootstrap/lib/Modal');
 var Button = require('react-bootstrap/lib/Button');
 var axios = require('axios');
 var queryObj = require('./LoginQuery.js');
+var LoginController = require('./controllers/Login.js')
 
 /** Maybe export username and password to the calling
 	function and do the database query there **/
@@ -20,12 +21,19 @@ export default class Login extends React.Component {
 
 		this.handleUsername = this.handleUsername.bind(this);
 		this.handlePassword = this.handlePassword.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
 	}
 	close() {
 		this.setState({showModal: false});
 	}
 	open() {
-		this.setState({showModal: true})
+		console.log("isLoggedIn "+this.state.isLoggedIn);
+		if(!this.state.isLoggedIn)
+			this.setState({showModal: true});
+		else {
+			this.handleLogout();
+			console.log("Logging out");
+		}
 	}
 
 	handleUsername(e) {
@@ -35,36 +43,18 @@ export default class Login extends React.Component {
 		   this.setState({password: e.target.value});
 	}
 	handleClick(event) {
+		console.log("Handling click");
+		if(!this.state.isLoggedIn) {
+			var that = this;
+			LoginController.Login(that);
+			console.log("Dialog: "+result);
 
-		this.setState({showModal: false});
-		var saveRef = this;
-
-		var data = {username: this.state.username, password: this.state.password};
-		var result;
-        axios.post('/login',data).then(function (response) {
-			result = JSON.stringify(response.data);
-			result = result.substring(1, result.length-1);
-			console.log("RESPONSE: "+JSON.stringify(response.config.data));
-			console.log("RESULT: "+result);
-
-			if(result === "Logging in") {
-
-				saveRef.setState({ isLoggedIn: true	});
-				saveRef.setState({ loginText: "Logout "+saveRef.state.username});
-
-			}
-
-			else if(result === "No user found" || result === "Wrong password") {
-				alert("Alert : "+result);
-			}
-
-
-		}).catch(function (error) {
-			console.log(error);
-		});
-
-			
-	
+		}
+	}
+	handleLogout() {
+		this.state.loginText = "Login";
+		this.setState({username:'', password:'', isLoggedIn: false});
+		console.log(this.state.isLoggedIn);
 	}
 
 
@@ -72,15 +62,16 @@ export default class Login extends React.Component {
 		return(
 		<div>
 			{/*Open the Login Popup when clicking the Login button*/}
+
 			<button className="Login"
 			onClick={this.open.bind(this)}>
 			{this.state.loginText}
 			</button>
 
-			{/*
-			if (isLoggedIn) {
-				button = <LogoutButton onClick={this.handleLogoutClick}	/>;
-		    } 
+			{
+			/*if (isLoggedIn) {
+				button = <LogoutButton onClick={this.handleLogout}	/>;
+		    }
 			else {
 			    button = <LoginButton onClick={this.handleClick}/>;
 		    }
